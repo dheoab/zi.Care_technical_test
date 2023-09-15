@@ -1,85 +1,61 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+<script>
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div id="layout" class="d-flex flex-row vh-100 ps-5" style="background-color: #FFFFFF">
+    <div id="sidebar" class="d-flex flex-column col col-2 p-3">
+      <div id="sidebar-logo"><span>Zi</span> Care</div>
+      <ul id="sidebar-menu">
+        <li class="sidebar-menu-item"><ion-icon name="layers" class="sidebar-menu-item-icons"></ion-icon> Dashboard</li>
+        <li class="sidebar-menu-item"><ion-icon name="business" class="sidebar-menu-item-icons"></ion-icon> Hospitals</li>
+        <li class="sidebar-menu-item"><ion-icon name="accessibility" class="sidebar-menu-item-icons"></ion-icon> Patients
+        </li>
+        <li class="sidebar-menu-item"><ion-icon name="medkit" class="sidebar-menu-item-icons"></ion-icon> Doctors</li>
+      </ul>
     </div>
-  </header>
-
-  <RouterView />
+    <div id="content" class="col"></div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style>
+#sidebar {
+  background-color: #FFFFFF;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+span {
+  color: #FF7272;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+#sidebar-logo {
+  color: #728EA1;
+  font-size: 32px;
+  font-weight: 800;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+#sidebar-menu {
+  padding: 0;
+  margin-top: 20px;
+  color: #728EA1;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.sidebar-menu-item {
+  list-style-type: none;
+  margin: 32px 0px;
+  font-size: 16px;
+
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+.sidebar-menu-item:hover {
+  background-color: #F5F6FA;
 }
 
-nav a:first-of-type {
-  border: 0;
+.sidebar-menu-item-icons {
+  color: #FF7272;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+#content {
+  border-top-left-radius: 64px;
+  border-bottom-left-radius: 64px;
+  background-color: #F5F6FA;
 }
 </style>
