@@ -1,6 +1,15 @@
 <script>
+import router from '../router/index'
+import { RouterLink } from 'vue-router';
+
 export default {
-    name: "sideBar"
+    name: "sideBar",
+    components: { RouterLink },
+    methods: {
+        navigate() {
+            router.push({ path: "/" })
+        }
+    }
 }
 </script>
 
@@ -11,7 +20,8 @@ export default {
             <li class="sidebar-menu-item"><ion-icon name="layers" class="sidebar-menu-item-icons"></ion-icon> Dashboard</li>
             <li class="sidebar-menu-item"><ion-icon name="business" class="sidebar-menu-item-icons"></ion-icon> Hospitals
             </li>
-            <li class="sidebar-menu-item"><ion-icon name="accessibility" class="sidebar-menu-item-icons"></ion-icon>
+            <li class="sidebar-menu-item" @click="navigate">
+                <ion-icon name="accessibility" class="sidebar-menu-item-icons"></ion-icon>
                 Patients
             </li>
             <li class="sidebar-menu-item"><ion-icon name="medkit" class="sidebar-menu-item-icons"></ion-icon> Doctors</li>
