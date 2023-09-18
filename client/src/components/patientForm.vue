@@ -1,22 +1,62 @@
 <script>
+import { mapActions, mapState } from 'pinia';
 import { RouterLink } from 'vue-router';
+import { useMainStore } from '../stores/mainStore';
 
 export default {
     name: "patientForm",
     data() {
         return {
-            patientName: "",
-            DoB: "",
-            gender: "",
-            address: "",
-            phoneNumber: "",
-            email: "",
-            emergencyContactName: "",
-            relation: "",
-            emergencyNumber: "",
+            newPatient: {
+                patientName: "",
+                DoB: "",
+                gender: "",
+                address: "",
+                phoneNumber: "",
+                email: "",
+                emergencyContactName: "",
+                relation: "",
+                emergencyNumber: "",
+            }
         };
+    }, props: ['editPatient']
+    , computed: {
+        ...mapState(useMainStore, ["selectedPatient"])
     },
-    components: { RouterLink }
+    components: { RouterLink },
+    methods: {
+        ...mapActions(useMainStore, ['addPatient']),
+        getNewPatientData() {
+            this.addPatient(this.newPatient)
+        },
+        cancelButton() {
+            if (this.editPatient !== undefined) {
+                this.newPatient.patientName = this.selectedPatient.name
+                this.newPatient.DoB = this.selectedPatient.DoB
+                this.newPatient.address = this.selectedPatient.address
+            } else {
+                this.newPatient = {
+                    patientName: "",
+                    DoB: "",
+                    gender: "",
+                    address: "",
+                    phoneNumber: "",
+                    email: "",
+                    emergencyContactName: "",
+                    relation: "",
+                    emergencyNumber: "",
+                }
+            }
+        }
+    },
+    created() {
+        console.log(this.editPatient, "<< editPatient");
+        if (this.editPatient !== undefined) {
+            this.newPatient.patientName = this.selectedPatient.name
+            this.newPatient.DoB = this.selectedPatient.DoB
+            this.newPatient.address = this.selectedPatient.address
+        }
+    },
 }
 
 </script>
@@ -38,7 +78,7 @@ export default {
                     </div>
                     <div>
                         <input class="form-control" type="text" name="name" placeholder="Patient name"
-                            v-model="this.patientName">
+                            v-model="this.newPatient.patientName">
                     </div>
                 </div>
 
@@ -49,7 +89,8 @@ export default {
                         </label>
                     </div>
                     <div>
-                        <input class="form-control" type="date" name="name" placeholder="Patient DoB" v-model="this.DoB">
+                        <input class="form-control" type="date" name="name" placeholder="Patient DoB"
+                            v-model="this.newPatient.DoB">
                     </div>
                 </div>
 
@@ -60,10 +101,10 @@ export default {
                         </label>
                     </div>
                     <div>
-                        <select v-model="this.gender" name="category" id="" class="form-select">
+                        <select v-model="this.newPatient.gender" name="category" id="" class="form-select">
                             <option disabled selected value="">Gender</option>
-                            <option :value="M">Male</option>
-                            <option :value="F">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
 
                     </div>
@@ -80,7 +121,7 @@ export default {
                     </div>
                     <div>
                         <textarea class="form-control" type="text" name="name" placeholder="Patient Address"
-                            v-model="this.address" style="height: 100px;" />
+                            v-model="this.newPatient.address" style="height: 100px;" />
                     </div>
                 </div>
 
@@ -91,8 +132,8 @@ export default {
                         </label>
                     </div>
                     <div>
-                        <input class="form-control" type="number" name="name" placeholder="Phone number"
-                            v-model="this.phoneNumber">
+                        <input class="form-control" type="text" name="name" placeholder="Phone number"
+                            v-model="this.newPatient.phoneNumber">
                     </div>
                 </div>
 
@@ -103,7 +144,8 @@ export default {
                         </label>
                     </div>
                     <div>
-                        <input class="form-control" type="email" name="name" placeholder="Email" v-model="this.email">
+                        <input class="form-control" type="email" name="name" placeholder="Email"
+                            v-model="this.newPatient.email">
                     </div>
                 </div>
 
@@ -118,7 +160,7 @@ export default {
                     </div>
                     <div>
                         <input class="form-control" type="text" name="name" placeholder="Person name"
-                            v-model="this.emergencyContactName">
+                            v-model="this.newPatient.emergencyContactName">
                     </div>
                 </div>
 
@@ -129,11 +171,10 @@ export default {
                         </label>
                     </div>
                     <div>
-                        <input class="form-control" type="text" name="name" placeholder="Relation" v-model="this.relation">
+                        <input class="form-control" type="text" name="name" placeholder="Relation"
+                            v-model="this.newPatient.relation">
                     </div>
                 </div>
-
-
 
                 <div class="row col-4 mb-3">
                     <div>
@@ -142,16 +183,15 @@ export default {
                         </label>
                     </div>
                     <div>
-                        <input class="form-control" type="number" name="name" placeholder="Phone number"
-                            v-model="this.emergencyNumber">
+                        <input class="form-control" type="text" name="name" placeholder="Phone number"
+                            v-model="this.newPatient.emergencyNumber">
                     </div>
                 </div>
 
                 <div class="d-flex flex-row justify-content-evenly" style="margin-top: 32px;">
-                    <button class="col-3 btn btn-danger">Cancel</button>
-                    <RouterLink class="col-3 btn btn-success" to="/">
-                        Submit
-                    </RouterLink>
+                    <button class="col-3 btn btn-danger" @click.prevent="cancelButton">Cancel</button>
+                    <button class="col-3 btn btn-success" @click.prevent="getNewPatientData">Submit</button>
+
                 </div>
 
             </form>

@@ -1,15 +1,13 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-//require("../datas/patients.json"),
+import router from "../router/index";
 export const useMainStore = defineStore("mainStore", {
   state: () => ({
     allPatients: [],
+    selectedPatient: {},
   }),
   actions: {
     fetchPatients() {
-      // const allPatients = require("../datas/patients.json").map((patient) => {
-      //   return patient;
-      // });
       this.allPatients = [
         {
           id: 1,
@@ -48,6 +46,23 @@ export const useMainStore = defineStore("mainStore", {
           address: "Cilandak, Jakarta Selatan",
         },
       ];
+    },
+
+    addPatient(newPatient) {
+      console.log(newPatient, "from Store");
+
+      router.push({ path: "/" });
+    },
+    fetchSelectedPatient(id) {
+      this.fetchPatients();
+
+      const patient = this.allPatients.find((patient) => patient.id == id);
+
+      this.selectedPatient = patient;
+
+      console.log(this.selectedPatient, "patient");
+
+      router.push({ path: `/${id}/edit-patient` });
     },
   },
 });

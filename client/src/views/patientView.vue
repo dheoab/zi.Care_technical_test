@@ -12,7 +12,8 @@ export default {
         ...mapState(useMainStore, ['allPatients'])
     },
     methods: {
-        ...mapActions(useMainStore, ['fetchPatients'])
+        ...mapActions(useMainStore, ['fetchPatients', 'fetchSelectedPatient']),
+
     },
     created() {
         this.fetchPatients()
@@ -45,9 +46,10 @@ export default {
                 <td>{{ patient.DoB }}</td>
                 <td>{{ patient.address }}</td>
                 <td>
-                    <ion-icon class="action-logo" name="create" style="color: rgb(133, 169, 133);"></ion-icon>
+                    <ion-icon class="action-logo" name="create" style="color: rgb(133, 169, 133);"
+                        @click.prevent="fetchSelectedPatient(patient.id)"></ion-icon>
+                    <ion-icon class="action-logo" name="person" style="color: #6989d4;"></ion-icon>
                     <ion-icon class="action-logo" name="trash" style="color: #FF7272;"></ion-icon>
-
                 </td>
             </tr>
         </tbody>
@@ -66,7 +68,8 @@ table tbody tr {
 .action-logo {
     align-items: center;
     margin-right: 20px;
-    font-size: 24px !important
+    font-size: 24px !important;
+    cursor: pointer
 }
 
 .sticky-button {

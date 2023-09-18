@@ -54,6 +54,7 @@ span {
     list-style-type: none;
     margin: 32px 0px;
     font-size: 16px;
+    cursor: pointer;
 
 }
 
